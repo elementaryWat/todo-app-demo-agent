@@ -1,4 +1,4 @@
-# Todo List App
+# Todo App Demo LLM agent
 
 This is a simple todo list application built with Next.js, TypeScript, and Firebase Firestore. The application is used for demonstration purposes of an AI agent interacting with the API.
 
