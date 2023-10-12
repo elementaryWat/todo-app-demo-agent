@@ -1,4 +1,4 @@
-GitHub Copilot: # Todo List App
+# Todo List App
 
 This is a simple todo list application built with Next.js, TypeScript, and Firebase Firestore. The application allows users to add, complete, and delete todo items.
 
