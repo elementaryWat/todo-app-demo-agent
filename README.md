@@ -5,7 +5,8 @@ This is a simple todo list application built with Next.js, TypeScript, and Fireb
 ## Technologies Used
 
 - TypeScript
-- React
+- Next.js
+- Flowise (for setting up the LLM agent)
 - Material-UI
 - Firebase Firestore
 
