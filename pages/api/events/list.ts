@@ -5,35 +5,38 @@ import { collection, getDocs, query, where } from "@firebase/firestore";
 import { startOfToday, addDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const periodName = req.query?.periodName as string;
-  const periodNumber = Number(req.query?.periodNumber) || 0;
-
-  let startDate: Date | null;
-  let endDate: Date | null;
-
-  switch (periodName) {
-    case "week":
-      startDate = startOfWeek(addDays(startOfToday(), 7 * periodNumber));
-      endDate = endOfWeek(addDays(startOfToday(), 7 * periodNumber));
-      break;
-    case "weekend":
-      startDate = startOfWeek(addDays(startOfToday(), 7 * periodNumber));
-      endDate = endOfWeek(addDays(startOfToday(), 7 * (periodNumber+1)));
-      endDate = addDays(endDate, -1);
-      break;
-    case "month":
-      startDate = startOfMonth(addDays(startOfToday(), 30 * periodNumber));
-      endDate = endOfMonth(addDays(startOfToday(), 30 * periodNumber));
-      break;
-    default:
-      startDate = null;
-      endDate = null;
-      break;
-  }
-  console.log(startDate,endDate)
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
 
   if (req.method === "GET") {
+    const periodName = req.query?.periodName as string;
+    const periodNumber = Number(req.query?.periodNumber) || 0;
+
+    let startDate: Date | null;
+    let endDate: Date | null;
+
+    switch (periodName) {
+      case "week":
+        startDate = startOfWeek(addDays(startOfToday(), 7 * periodNumber));
+        endDate = endOfWeek(addDays(startOfToday(), 7 * periodNumber));
+        break;
+      case "weekend":
+        startDate = startOfWeek(addDays(startOfToday(), 7 * periodNumber));
+        endDate = endOfWeek(addDays(startOfToday(), 7 * (periodNumber+1)));
+        endDate = addDays(endDate, -1);
+        break;
+      case "month":
+        startDate = startOfMonth(addDays(startOfToday(), 30 * periodNumber));
+        endDate = endOfMonth(addDays(startOfToday(), 30 * periodNumber));
+        break;
+      default:
+        startDate = null;
+        endDate = null;
+        break;
+    }
+    console.log(startDate,endDate)
     try {
       const eventsCollection = collection(db, "events");
       let q = startDate && endDate ? query(eventsCollection, where("date", ">=", startDate), where("date", "<=", endDate)) : eventsCollection;
