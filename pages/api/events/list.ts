@@ -21,16 +21,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       switch (periodName) {
         case "week":
           startDate = startOfWeek(addDays(startOfToday(), 7 * periodNumber));
-          endDate = endOfWeek(addDays(startOfToday(), 7 * periodNumber));
+          endDate = endOfWeek(addDays(startOfToday(), 7 * (periodNumber+1)));
           break;
         case "weekend":
-          startDate = startOfWeek(addDays(startOfToday(), 7 * periodNumber));
+          startDate = startOfWeek(addDays(startOfToday(),( 7 * (periodNumber+1))-1));
           endDate = endOfWeek(addDays(startOfToday(), 7 * (periodNumber+1)));
           endDate = addDays(endDate, -1);
           break;
         case "month":
           startDate = startOfMonth(addDays(startOfToday(), 30 * periodNumber));
-          endDate = endOfMonth(addDays(startOfToday(), 30 * periodNumber));
+          endDate = endOfMonth(addDays(startOfToday(), 30 * (periodNumber+1)));
           break;
         default:
           startDate = null;
